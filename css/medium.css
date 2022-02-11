@@ -1,0 +1,34 @@
+@media only screen and (min-width: 35rem) {
+    nav ul{         
+        display:flex;
+        flex-direction: row;
+    }
+    /*This code is from the home page*/
+    .reviews-and-upgrades{
+        display:flex;
+        flex-direction: row-reverse;
+        justify-content:space-evenly;
+        padding:10px;
+    }
+    .delorean-sale div button{
+        max-width:150px;
+    }
+
+    h1{
+        margin-bottom:30px;
+        margin-left:10px;
+    }
+
+    .delorean-info{
+        
+        position: absolute;
+        top: -25px;
+        left:30px;
+    }
+    nav button{
+        display:none;
+    }
+    nav ul.hide{display:flex;
+    flex-direction:row;}
+
+}
