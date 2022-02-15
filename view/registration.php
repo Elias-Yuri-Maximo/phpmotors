@@ -50,18 +50,18 @@
     <form action="/phpmotors/accounts/index.php" method="post">
         
         <label for="fName">First Name:<br>
-        <input type="text" id="fName" name="clientFirstname"></label><br>
+        <input <?php if(isset($clientFirstname)){echo "value='$clientFirstname'";}  ?> type="text" id="fName" name="clientFirstname" required></label><br>
         
         <label for="lName">Last Name<br>
-        <input type="text" id="lName" name="clientLastname"><br></label>
+        <input <?php if(isset($clientLastname)){echo "value='$clientLastname'";}  ?>type="text" id="lName" name="clientLastname" required><br></label>
 
         <label for="email">E-mail<br>
-        <input type="email" id="email" name="clientEmail"></label>
+        <input <?php if(isset($clientEmail)){echo "value='$clientEmail'";}  ?> type="email" id="email" name="clientEmail" required></label>
 
-        <p>Passwords must be at least 8 characters and contain at least 1 number, 1 capital letter and 1 special character</p>
+        <br><span>Passwords must be at least 8 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
 
         <label for="password">Password<br>
-        <input type="password" id="password" name="clientPassword"><br></label>
+        <input pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" type="password" id="password" name="clientPassword" required><br></label>
         
         <button>Show Password</button>
         <input type="submit" name="submit" id="regbtn" value="register">

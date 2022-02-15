@@ -36,11 +36,19 @@
     </nav>
     <h1>Add Car Classification</h1>
 
+    <?php
+        //isset() checks if the variable message exists, 
+        //If it does, it returns TRUE.
+        if (isset($message)) {
+            echo $message;
+        }
+    ?>
+    <p>Classification names should not have more than 30 letters</p>
     <form action="/phpmotors/vehicles/index.php" method="post">
         <label for="className">Classification Name:<br>
-        <input type="text" id="className" name="classsificationName"></label><br>
+        <input pattern="^.{1,30}$" type="text" title="Classification, not bigger than 30 letters" id="className" name="classificationName" required></label><br>
         
-        <input type="submit" name="submit" id="regbtn" value="addClassification">
+        <input type="submit" name="submit" id="regbtn" value="Add Classification">
         <input type="hidden" name="action" value="addClassification">
         <br>
         <br>

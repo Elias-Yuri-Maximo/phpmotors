@@ -1,4 +1,25 @@
-<!DOCTYPE html>
+<?php
+//print_r($classifications) ;
+//Creates the dropdown list
+$dropList = '<select id="classification" name="classificationId">';
+foreach ($classifications as $classification){
+$dropList .="<option value='$classification[classificationId]'";
+
+//echo $classificationId.'\n';
+if(isset($classificationId)){
+    //echo $classification['classificationId'].'/n';
+   // echo $classificationId;
+    if(strval($classification['classificationId']) === strval($classificationId)){
+            $dropList .= ' selected ';
+
+    }
+}
+
+$dropList .= ">$classification[classificationName]</option>";
+}
+$dropList.='</select>';
+
+?><!DOCTYPE html>
 <html lang="en-us">
 <head>
     <title>Template | PHP Motors</title>
@@ -36,44 +57,53 @@
     </nav>
     <h1>Add Vehicle</h1>
     <p>*Note all fields are required</p>
-    <form action="/phpmotors/accounts/index.php" method="post">
-    <form action="/phpmotors/accounts/index.php" method="post">
+
+    <?php
+        //isset() checks if the variable message exists, 
+        //If it does, it returns TRUE.
+        if (isset($message)) {
+            echo $message;
+        }
+    ?>
+    <form action="/phpmotors/vehicles/index.php" method="post">
+        <label for="classification">
         <?php echo $dropList; ?>
+        </label>
         <br>
         <br>
 
         <label for="make">Make:<br>
-        <input type="text" id="make" name="invMake"></label><br>
+        <input type="text" <?php if(isset($invMake)){echo "value='$invMake'";}  ?> id="make" name="invMake" required></label><br>
         
         <label for="model">Model:<br>
-        <input type="text" id="model" name="invModel"><br></label>
+        <input type="text" <?php if(isset($invModel)){echo "value='$invModel'";}  ?> id="model" name="invModel" required><br></label>
 
         <label for="description">Description:<br>
-        <textarea id="description" name="invDescription"></textarea></label>
+        <textarea  id="description" name="invDescription" required><?php if(isset($invDescription)){echo "$invDescription";}  ?> </textarea></label>
 
         <br>
         <label for="imagePath">Image Path:<br>
-        <input type="text" id="imagePath" name="invImage"><br></label>
+        <input type="text" <?php if(isset($invImage)){echo "value='$invImage'";}  ?> id="imagePath" name="invImage" required><br></label>
 
         <label for="thumbnailPath">Thumbnail Path:<br>
-        <input type="text" id="thumbnailPath" name="invThumbnail"><br></label>
+        <input type="text" <?php if(isset($invThumbnail)){echo "value='$invThumbnail'";}  ?>id="thumbnailPath" name="invThumbnail" required><br></label>
 
         <label for="price">Price:<br>
-        <input type="number" id="price" name="invPrice"><br></label>
+        <input type="number"<?php if(isset($invPrice)){echo "value='$invPrice'";}  ?> id="price" name="invPrice" required><br></label>
 
         <label for="inStock">How Many in Stock:<br>
-        <input type="number" id="inStock" name="invStock"><br></label>
+        <input type="number"<?php if(isset($invStock)){echo "value='$invStock'";}  ?> id="inStock" name="invStock" required><br></label>
 
         <label for="color">Color:<br>
-        <input type="number" id="color" name="invColor"><br></label>
+        <input type="text" <?php if(isset($invColor)){echo "value='$invColor'";}  ?> id="color" name="invColor" required><br></label>
 
 
 
 
         
     
-        <input type="submit" name="submit" id="regbtn" value="register">
-        <input type="hidden" name="action" value="register">
+        <input type="submit" name="submit" id="regbtn" value="Add Vehicle">
+        <input type="hidden" name="action" value="regVehicle">
         <br>
         <br>
 
