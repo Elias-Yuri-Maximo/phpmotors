@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php
+if ($_SESSION['loggedin']==FALSE){
+    header('../view/login.php');
+}
+?><!DOCTYPE html>
 <html lang="en-us">
 <head>
     <title>Template | PHP Motors</title>
@@ -36,32 +40,22 @@
     </nav>
     
     <?php
-        //isset() checks if the variable message exists, 
-        //If it does, it returns TRUE.
-        //if (isset($message)) {
-        //    echo $message;
-        //}
+    echo '<h1>'.$_SESSION['clientData']['clientFirstname'].' '.$_SESSION['clientData']['clientLastname'].'</h1>';
+    $userInfoUl = '<ul>';
+    $userInfoUl .='<li>First Name:'.$_SESSION['clientData']['clientFirstname'].'</li>';
+    $userInfoUl .='<li>Last Name:'.$_SESSION['clientData']['clientLastname'].'</li>';
+    $userInfoUl .='<li>E-mail:'.$_SESSION['clientData']['clientEmail'].'</li>';
+    $userInfoUl .='</ul>';
+    echo $userInfoUl;
 
-        if (isset($_SESSION['message'])) {
-            echo $_SESSION['message'];
-           }
+    if(intval($_SESSION['clientData']['clientLevel']) > 1 ){
+        echo '<p><a href="/phpmotors/vehicles/">Vehicle Administration</a></p>';
+    }
+
+    //print_r($_SESSION['clientData']);
+    //echo "$_SESSION['clientData']['clientLevel']";
     ?>
-
-    <h1>Sign in</h1>
-    <form action="/phpmotors/accounts/index.php" method="post">
-        <label>E-mail:<br>
-        <input name="clientEmail" <?php if(isset($clientEmail)){echo "value='$clientEmail'";}?> type="email" required></label><br>
-        
-        <br><span>Passwords must be at least 8 characters and contain at least 1 number, 1 capital letter and 1 special character</span><br><br>
-        <label>Password<br>
-        <input name="clientPassword" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" type="password" required><br></label>
-        <input type="submit" name="Login" id="logbtn" value="Login">
-        <input type="hidden" name="action" value="Login">
-        <br>
-        <br>
-
-        <a href="../accounts/index.php?action=registration">Not a member yet?</a>
-    </form>
+    
     <footer>
     <!--p>&copy; PHP Motors, All rights reserved. All Images used are believed
          to be in "Fair Use". Please notify the author if any are not and 

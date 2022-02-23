@@ -12,6 +12,10 @@ require_once '../model/vehicle-model.php';
 //Gets the library with the utility functions
 require_once '../library/functions.php';
 
+// Create or access a Session
+session_start();
+
+
 //This creates the NAV list 
 $classifications = getClassifications();
 $navList = renderNavBar($classifications);

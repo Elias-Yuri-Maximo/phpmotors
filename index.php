@@ -10,6 +10,9 @@ require_once 'model/main-model.php';
 //Gets the functions library
 require_once 'library/functions.php';
 
+// Create or access a Session
+session_start();
+
 $classifications = getClassifications();
 //This gets the classifications requested by the model
 $navList = renderNavBar($classifications);
@@ -31,6 +34,11 @@ $navList .= '</ul>';
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL){
  $action = filter_input(INPUT_GET, 'action');
+}
+
+if(isset($_COOKIE['firstname'])){
+  $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
 }
 
 switch ($action){
