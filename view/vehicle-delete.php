@@ -1,7 +1,14 @@
-<!DOCTYPE html>
+<?php
+if($_SESSION['clientData']['clientLevel'] < 2){
+ header('location: /phpmotors/');
+ exit;
+}
+?><!DOCTYPE html>
+
 <html lang="en-us">
 <head>
-    <title>Template | PHP Motors</title>
+    <title><?php if(isset($invInfo['invMake'])){ 
+		echo "Delete $invInfo[invMake] $invInfo[invModel]";} ?> | PHP Motors</title>
 
     <meta charset="UTF-8">
 
@@ -34,8 +41,10 @@
             <!--?//php require $_SERVER['DOCUMENT_ROOT'].'/phpmotors/snippets/nav.php';?-->
         <?php echo $navList; ?>
     </nav>
-    <h1>Sign in</h1>
+    <h1><?php if(isset($invInfo['invMake'])){ 
+	echo "Delete $invInfo[invMake] $invInfo[invModel]";}?></h1>
 
+    <p>*Confirm vehicle deletion. The delete is permanent.</p>
 
     <?php
         //isset() checks if the variable message exists, 
@@ -44,26 +53,24 @@
             echo $message;
         }
     ?>
+    <form action="/phpmotors/vehicles/index.php" method="post">
+    
 
-
-
-    <form action="/phpmotors/accounts/index.php" method="post">
+        <label for="make">Make:<br>
+        <input type="text" readonly <?php if(isset($invInfo['invMake'])) {echo "value='$invInfo[invMake]'"; }?> id="make" name="invMake"></label><br>
         
-        <label for="fName">First Name:<br>
-        <input <?php if(isset($clientFirstname)){echo "value='$clientFirstname'";}  ?> type="text" id="fName" name="clientFirstname" required></label><br>
+        <label for="model">Model:<br>
+        <input type="text" readonly <?php if(isset($invInfo['invModel'])) {echo "value='$invInfo[invModel]'"; }?> id="model" name="invModel"><br></label>
+
+        <label for="description">Description:<br>
+        <textarea readonly id="description" name="invDescription"><?php if(isset($invInfo['invDescription'])) {echo $invInfo['invDescription']; } ?> </textarea></label>
+
+    
         
-        <label for="lName">Last Name<br>
-        <input <?php if(isset($clientLastname)){echo "value='$clientLastname'";}  ?>type="text" id="lName" name="clientLastname" required><br></label>
-
-        <label for="email">E-mail<br>
-        <input <?php if(isset($clientEmail)){echo "value='$clientEmail'";}  ?> type="email" id="email" name="clientEmail" required></label>
-
-        <br>
-        <label for="password">Password<br>
-        <input pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" type="password" id="password" name="clientPassword" required><br></label>
-
-        <input type="submit" name="submit" id="regbtn" value="register">
-        <input type="hidden" name="action" value="register">
+        <input type="submit" name="submit" value="Delete Vehicle">
+        <input type="hidden" name="action" value="deleteVehicle">
+        <input type="hidden" name="invId" value="
+        <?php if(isset($invInfo['invId'])){ echo $invInfo['invId'];} ?>">
         <br>
         <br>
 

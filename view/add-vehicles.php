@@ -1,7 +1,7 @@
 <?php
 //print_r($classifications) ;
 //Creates the dropdown list
-$dropList = '<select id="classification" name="classificationId">';
+$dropList = '<select required id="classification" name="classificationId">';
 foreach ($classifications as $classification){
 $dropList .="<option value='$classification[classificationId]'";
 
@@ -22,7 +22,7 @@ $dropList.='</select>';
 ?><!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <title>Template | PHP Motors</title>
+    <title>Add Vehicles | PHP Motors</title>
 
     <meta charset="UTF-8">
 

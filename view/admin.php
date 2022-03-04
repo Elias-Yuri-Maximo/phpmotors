@@ -38,10 +38,19 @@ if ($_SESSION['loggedin']==FALSE){
             <!--?//php require $_SERVER['DOCUMENT_ROOT'].'/phpmotors/snippets/nav.php';?-->
         <?php echo $navList; ?>
     </nav>
-    
+    <div class="vehicles-content">
     <?php
     echo '<h1>'.$_SESSION['clientData']['clientFirstname'].' '.$_SESSION['clientData']['clientLastname'].'</h1>';
-    $userInfoUl = '<ul>';
+
+    //later check if session message worked
+   if (isset($SESSION['message'])){
+       echo 'message';
+   }elseif(isset($message)){
+       echo 'message';
+   }
+
+    $userInfoUl = '<p> You are logged in right now</p>';
+    $userInfoUl .= '<ul>';
     $userInfoUl .='<li>First Name:'.$_SESSION['clientData']['clientFirstname'].'</li>';
     $userInfoUl .='<li>Last Name:'.$_SESSION['clientData']['clientLastname'].'</li>';
     $userInfoUl .='<li>E-mail:'.$_SESSION['clientData']['clientEmail'].'</li>';
@@ -49,13 +58,22 @@ if ($_SESSION['loggedin']==FALSE){
     echo $userInfoUl;
 
     if(intval($_SESSION['clientData']['clientLevel']) > 1 ){
-        echo '<p><a href="/phpmotors/vehicles/">Vehicle Administration</a></p>';
+        echo '
+        <h2>Inventory Management</h2>
+        <p>Use this link to manage inventory</p>
+        <p><a href="/phpmotors/vehicles/">Vehicle Administration</a></p>';
     }
+
+    
+
 
     //print_r($_SESSION['clientData']);
     //echo "$_SESSION['clientData']['clientLevel']";
     ?>
-    
+    <h2>Account Management</h2>
+    <p>Use this link to update your account information</p>
+    <p><a href="/phpmotors/accounts/?action=modUser">Update Acoount information</a></p>
+    </div>
     <footer>
     <!--p>&copy; PHP Motors, All rights reserved. All Images used are believed
          to be in "Fair Use". Please notify the author if any are not and 

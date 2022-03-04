@@ -134,7 +134,12 @@ switch ($action){
 
     break;
 
-
+    case 'Logout';
+      unset($_SESSION);
+      session_destroy();
+      header('Location: /phpmotors/index.php');
+      
+    break;
 
     case 'login':
       include '../view/login.php';
@@ -142,6 +147,104 @@ switch ($action){
 
     case 'registration':
       include '../view/registration.php';
+    break;
+
+
+//GOES TO THE UPDATE USER
+    case 'modUser':
+      //coming from the admin.php
+      include '../view/client-update.php';
+      
+    break;
+
+//TAKES DATA FROM THE USER-UPDATE AND PRECESS IT 
+case 'updateUser':
+
+ // Filter and store the data
+      //FILTER_UNSAFE_RAW/ FILTER_SANITIZE_STRING
+      $clientFirstname = trim(filter_input(INPUT_POST, 'clientFirstname',FILTER_UNSAFE_RAW));
+      $clientLastname = trim(filter_input(INPUT_POST, 'clientLastname', FILTER_UNSAFE_RAW));
+      $clientEmail = trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL));
+      
+    if ($clientEmail != $_SESSION['clientData']['clientEmail']){
+        $clientEmail = checkEmail($clientEmail);
+        //Check if e-mail is duplicated
+        $checkEmail = checkExistingEmail($clientEmail);
+      if($checkEmail){
+        $message = '<p>This e-mail already exists, please insert a valid one</p>';
+        include '../view/client-update.php';
+        exit;
+      }
+    }
+
+    // Check for missing data
+    if(empty($clientFirstname) || empty($clientLastname) || empty($clientEmail)){
+      $message = '<p>Please provide information for all empty form fields.</p>';
+      include '../view/client-update.php';
+      exit; 
+    }
+
+
+
+    // Send the data to the model
+    $updateOutcome = updateClient($clientFirstname, $clientLastname, $clientEmail, $clientId);
+
+    // Check and report the result
+  if($updateOutcome === 1){
+      $_SESSION['message'] = "Thanks for updating $clientFirstname. Please use your email and password to login.";  
+      //$message = "<p>Thanks for registering $clientFirstname. Please use your email and password to login.</p>";
+      setcookie("firstname", $clientFirstname, strtotime('+ 1 year'), '/' );
+      //header('Location: /phpmotors/accounts/?action=login');
+      
+
+      array_pop($_SESSION);
+      $clientData = getClientById($clientId);
+      // Store the array into the session
+
+      $_SESSION['clientData'] = $clientData;
+
+      include '../view/admin.php';
+
+      exit;
+    
+    } else {
+      $message = "<p>Sorry $clientFirstname, but the update failed. Please try again.</p>";
+      include '../view/client-update.php';
+      exit;
+    }
+    
+    break;
+    
+    //HANDLES WITH THE ALTERATION OF A PASSWORD
+    case 'updatePassword':
+      $clientPassword = trim(filter_input(INPUT_POST, 'clientPassword', FILTER_UNSAFE_RAW));
+      $checkPassword = checkPassword($clientPassword);
+
+      if(empty($checkPassword)){
+        $message = '<p>Please enter a valid password.</p>';
+        include '../view/client-update.php';
+        exit; 
+      }
+      $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+    
+      $updateOutcome = updatePassword($hashedtPassword, $clientId);
+
+      // Check and report the result
+    if($updateOutcome === 1){
+        $_SESSION['message'] = "Thanks for updating $clientFirstname. Please use your email and password to login.";  
+        //$message = "<p>Thanks for registering $clientFirstname. Please use your email and password to login.</p>";
+        setcookie("firstname", $clientFirstname, strtotime('+ 1 year'), '/' );
+        //header('Location: /phpmotors/accounts/?action=login');
+        
+
+        array_pop($_SESSION);
+        $clientData = getClientById($clientId);
+        // Store the array into the session
+
+        $_SESSION['clientData'] = $clientData;
+        include '../view/admin.php';
+        exit;
+    }
     break;
 
     case 'template':

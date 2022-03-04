@@ -30,6 +30,29 @@ function checkEmail($clientEmail){
     return $navList;
  }
 
+ function checkUserLog(){
+     //Checks if the user is logged and has a high
+     //enough level. 
+     if($_SESSION['loggedin'] && intval($_SESSION['clientData']['clientLevel']) > 1 ){
+        //print_r($_SESSION['clientData']['clientLevel']);
+     }else{
+        header('Location: /phpmotors/index.php');
+         
+     }
+
+     //print_r($_SESSION['clientData']);
+ }
+
+ // Build the classifications select list 
+function buildClassificationList($classifications){ 
+   $classificationList = '<select name="classificationId" id="classificationList">'; 
+   $classificationList .= "<option>Choose a Classification</option>"; 
+   foreach ($classifications as $classification) { 
+    $classificationList .= "<option value='$classification[classificationId]'>$classification[classificationName]</option>"; 
+   } 
+   $classificationList .= '</select>'; 
+   return $classificationList; 
+}
 
    
 ?>

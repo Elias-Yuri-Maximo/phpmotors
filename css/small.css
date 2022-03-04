@@ -188,3 +188,14 @@ p a{
 
 
 }
+
+.vehicles-content{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+table{
+    border: solid black 1px;
+    font-family: "roboto", sans-serif;
+    margin-top: 10px;
+}
