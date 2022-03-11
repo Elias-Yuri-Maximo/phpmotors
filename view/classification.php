@@ -1,20 +1,7 @@
-<?php
-if ($_SESSION['clientData']['clientLevel'] < 2) {
- header('location: /phpmotors/');
- exit;
-}
-
-if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-}
-
-
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <title>Template | PHP Motors</title>
-
+<title><?php echo $classificationName; ?> vehicles | PHP Motors, Inc.</title>
     <meta charset="UTF-8">
 
     <link rel="stylesheet" type="text/css" href="/phpmotors/css/small.css" media="screen" />
@@ -46,33 +33,15 @@ if (isset($_SESSION['message'])) {
             <!--?//php require $_SERVER['DOCUMENT_ROOT'].'/phpmotors/snippets/nav.php';?-->
         <?php echo $navList; ?>
     </nav>
-    <h1>Vehicle Management</h1>
-    <div class="vehicles-content">
-    <a href="../vehicles/index.php?action=classificationView">Add Classification</a>
-    <br>
-    <a href="../vehicles/index.php?action=addVehicle">Add Vehicle</a>
-
-    
-    
-    <?php
-    if (isset($message)) { 
-    echo $message; 
-    } 
-    if (isset($classificationList)) { 
-    echo '<h2>Vehicles By Classification</h2>'; 
-    echo '<p>Choose a classification to see those vehicles</p>'; 
-    echo $classificationList; 
-    }
+    <h1><?php echo $classificationName; ?> vehicles</h1>
+    <?php if(isset($message)){
+        echo $message; }
     ?>
 
-    <noscript>
-    <p><strong>JavaScript Must Be Enabled to Use this Page.</strong></p>
-    </noscript>
+    <?php if(isset($vehicleDisplay)){
+        echo $vehicleDisplay;
+    } ?>
 
-    <table id="inventoryDisplay"></table>
-
-
-    </div>
     <footer>
     <!--p>&copy; PHP Motors, All rights reserved. All Images used are believed
          to be in "Fair Use". Please notify the author if any are not and 
@@ -80,6 +49,6 @@ if (isset($_SESSION['message'])) {
          <?php require $_SERVER['DOCUMENT_ROOT'].'/phpmotors/snippets/footer.php';?>
     </footer>
     </main>
-<script src="../js/inventory.js"></script>
+
 </body>
-</html><?php unset($_SESSION['message']); ?>
+</html>

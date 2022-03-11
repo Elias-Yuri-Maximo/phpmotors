@@ -118,7 +118,7 @@ if($regOutcome === 1){
 
 break;
 
-   case 'classification':
+   case 'classificationView':
     checkUserLog();
       include '../view/add-classification.php';
    break;
@@ -256,6 +256,40 @@ if($updateResult === 1){
      include '../view/vehicle-update.php';
      exit;
    }
+
+  break;
+
+  case 'classification':
+   
+
+    $classificationName = filter_input(INPUT_GET, 'classificationName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $vehicles = getVehiclesByClassification($classificationName);
+
+    if(!count($vehicles)){
+      $message = "<p class='notice'>Sorry, no $classificationName</p>";
+
+    } else {
+      $vehicleDisplay = buildVehiclesDisplay($vehicles);
+    }
+
+    //echo $vehicleDisplay;
+    //exit;
+    
+    include '../view/classification.php';
+  break;
+
+  case 'carInfo':
+  $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+  $vehicleInfo = getVehiclesById($invId);
+
+  if(!count($vehicleInfo)){
+  $message = "<p class='notice'>Sorry, no $classificationName</p>";
+  }else{
+  $vehicleInfoDisplay = buildVehicleDisplay($vehicleInfo);
+  }
+
+  //print_r($vehicleInfo);
+
 
   break;
 

@@ -38,7 +38,7 @@
 
 
 
-        <img src="../phpmotors/images/delorean.jpg" alt="Delorean car image">
+        <img src="../phpmotors/images/vehicles/delorean.jpg" alt="Delorean car image">
 
         <div class="delorean-info">
         <h2>DMC delorean</h2>

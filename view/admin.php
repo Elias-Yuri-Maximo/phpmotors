@@ -46,7 +46,7 @@ if ($_SESSION['loggedin']==FALSE){
    if (isset($SESSION['message'])){
        echo 'message';
    }elseif(isset($message)){
-       echo 'message';
+       echo '<p>'.$message.'</p>';
    }
 
     $userInfoUl = '<p> You are logged in right now</p>';

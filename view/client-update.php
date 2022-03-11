@@ -4,7 +4,7 @@ if ($_SESSION['loggedin']==FALSE){
 }?><!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <title>Template | PHP Motors</title>
+    <title>Update | PHP Motors</title>
 
     <meta charset="UTF-8">
 
@@ -38,10 +38,10 @@ if ($_SESSION['loggedin']==FALSE){
         <?php echo $navList; ?>
     </nav>
 
-<?php 
-print_r($_SESSION)?>
 
+    
     <h1>Manage Account</h1>
+    <div class="vehicles-content">
     <h2>Update Account</h2>
 
     <form action="/phpmotors/accounts/index.php" method="post">
@@ -64,12 +64,13 @@ print_r($_SESSION)?>
         
     
         <input type="submit" name="submit" value="Update User Info">
-        <input type="hidden" name="action" value="updateUser">
         <input type="hidden" name="clientId" value="
         <?php if(isset($_SESSION['clientData']['clientId'])){ echo $_SESSION['clientData']['clientId'];} 
          ?>
         ">
+        <input type="hidden" name="action" value="updateUser">
 
+    </form>
 
         <h2>Update Password</h2>
         
@@ -95,7 +96,7 @@ print_r($_SESSION)?>
         ">
         </form>
 
-
+    </div>
     <footer>
     <!--p>&copy; PHP Motors, All rights reserved. All Images used are believed
          to be in "Fair Use". Please notify the author if any are not and 

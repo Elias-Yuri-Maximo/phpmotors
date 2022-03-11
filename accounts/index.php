@@ -150,6 +150,18 @@ switch ($action){
     break;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 //GOES TO THE UPDATE USER
     case 'modUser':
       //coming from the admin.php
@@ -165,6 +177,7 @@ case 'updateUser':
       $clientFirstname = trim(filter_input(INPUT_POST, 'clientFirstname',FILTER_UNSAFE_RAW));
       $clientLastname = trim(filter_input(INPUT_POST, 'clientLastname', FILTER_UNSAFE_RAW));
       $clientEmail = trim(filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL));
+      $clientId =  trim(filter_input(INPUT_POST, 'clientId', FILTER_UNSAFE_RAW));
       
     if ($clientEmail != $_SESSION['clientData']['clientEmail']){
         $clientEmail = checkEmail($clientEmail);
@@ -191,14 +204,15 @@ case 'updateUser':
 
     // Check and report the result
   if($updateOutcome === 1){
-      $_SESSION['message'] = "Thanks for updating $clientFirstname. Please use your email and password to login.";  
+      $message = "Thanks for updating your account, $clientFirstname.";  
       //$message = "<p>Thanks for registering $clientFirstname. Please use your email and password to login.</p>";
       setcookie("firstname", $clientFirstname, strtotime('+ 1 year'), '/' );
       //header('Location: /phpmotors/accounts/?action=login');
       
 
-      array_pop($_SESSION);
+      //array_pop($_SESSION);
       $clientData = getClientById($clientId);
+      //echo $_SESSION;
       // Store the array into the session
 
       $_SESSION['clientData'] = $clientData;
@@ -212,12 +226,23 @@ case 'updateUser':
       include '../view/client-update.php';
       exit;
     }
-    
+
     break;
     
+
+
+
+
+
+
+
+
+
+
     //HANDLES WITH THE ALTERATION OF A PASSWORD
     case 'updatePassword':
       $clientPassword = trim(filter_input(INPUT_POST, 'clientPassword', FILTER_UNSAFE_RAW));
+      $clientId = trim(filter_input(INPUT_POST, 'clientId', FILTER_UNSAFE_RAW));
       $checkPassword = checkPassword($clientPassword);
 
       if(empty($checkPassword)){
@@ -227,21 +252,21 @@ case 'updateUser':
       }
       $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
     
-      $updateOutcome = updatePassword($hashedtPassword, $clientId);
+      $updateOutcome = updatePassword($hashedPassword, $clientId);
 
       // Check and report the result
     if($updateOutcome === 1){
-        $_SESSION['message'] = "Thanks for updating $clientFirstname. Please use your email and password to login.";  
+        $message = "Thanks for updating. Please use your email and password to login.";  
         //$message = "<p>Thanks for registering $clientFirstname. Please use your email and password to login.</p>";
-        setcookie("firstname", $clientFirstname, strtotime('+ 1 year'), '/' );
+        //setcookie("firstname", strtotime('+ 1 year'), '/' );
         //header('Location: /phpmotors/accounts/?action=login');
         
 
-        array_pop($_SESSION);
-        $clientData = getClientById($clientId);
+        //array_pop($_SESSION);
+        //$clientData = getClientById($clientId);
         // Store the array into the session
 
-        $_SESSION['clientData'] = $clientData;
+        //$_SESSION['clientData'] = $clientData;
         include '../view/admin.php';
         exit;
     }

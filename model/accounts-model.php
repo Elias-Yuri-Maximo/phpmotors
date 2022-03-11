@@ -64,9 +64,9 @@ function regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassw
 
    function getClientById($clientId){
     $db = phpmotorsConnect();
-    $sql = 'SELECT clientId, clientFirstname, clientLastname, clientEmail, clientLevel, clientPassword FROM clients WHERE clientId = :$clientId';
+    $sql = 'SELECT clientId, clientFirstname, clientLastname, clientEmail, clientLevel FROM clients WHERE clientId = :clientId';
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(':clientEmail', $clientId, PDO::PARAM_STR);
+    $stmt->bindValue(':clientId', $clientId, PDO::PARAM_STR);
     $stmt->execute();
     $clientData = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
@@ -80,7 +80,7 @@ function regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassw
                 $sql = 'UPDATE clients SET
                 clientFirstname = :clientFirstname, 
                 clientLastname = :clientLastname,
-                clientEmail = :clientEmail,
+                clientEmail = :clientEmail
                 
                 WHERE clientId = :clientId'
                 ;
@@ -89,6 +89,7 @@ function regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassw
                 // The next four lines repace the placeholders in the SQL
                 // statement with the actual values in the variables
                 // and tells the database the type of data it is
+                
                 $stmt->bindValue(':clientFirstname', $clientFirstname, PDO::PARAM_STR);
                 $stmt->bindValue(':clientLastname', $clientLastname, PDO::PARAM_STR);
                 $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
@@ -112,7 +113,7 @@ function regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassw
         clientPassword = :clientPassword
         
         WHERE clientId = :clientId';
-        
+
         // Create the prepared statement using the phpmotors connection
         $stmt = $db->prepare($sql);
         // The next four lines replace the placeholders in the SQL
