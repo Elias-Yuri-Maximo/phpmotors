@@ -244,15 +244,16 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) 
   } // ends resizeImage function
 
   function buildThumbnailDisplay($thumbnails){
-     $thumbnailDisplay = '<div>';
+     $thumbnailDisplay = '<div id="thumbnails">';
     
      foreach ($thumbnails as $thumbnail) {
         print_r( $thumbnail);
-      $thumbnailDisplay .= '<img src="'.$thumbnail['imgPath'].'">';
-      $thumbnailDisplay .= '</div>';
+      $thumbnailDisplay .= '<img src="'.$thumbnail['imgPath'].'" alt="This is a '.$thumbnail['imgName'].'">';
+     
     
      }
-
+     $thumbnailDisplay .= '</div>';
+     return $thumbnailDisplay;
   }
 
    
