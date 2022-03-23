@@ -142,7 +142,7 @@ function getVehiclesByClassification($classificationName){
     //the record from the database
     //Database
     $db = phpmotorsConnect();
-    $sql = 'SELECT * FROM inventory WHERE classificationId IN (SELECT classificationId FROM carclassification WHERE classificationName = :classificationName)';
+    $sql = "SELECT  inventory.invId, inventory.invMake, inventory.invModel, inventory.invDescription, inventory.invImage, inventory.invThumbnail, inventory.invPrice, inventory.invStock, inventory.invColor, inventory.classificationId, images.imgPath FROM inventory JOIN images ON images.invId = inventory.invId WHERE (classificationId IN (SELECT classificationId FROM carclassification WHERE classificationName = :classificationName)) AND (images.imgName LIKE '%-tn%') AND (images.imgPrimary=1)";
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':classificationName', $classificationName, PDO::PARAM_STR);
     $stmt->execute();
@@ -151,12 +151,13 @@ function getVehiclesByClassification($classificationName){
     return $vehicles;
 }
 
+
 function getVehiclesById($invId){
     //This function uses a SQL subquery in order to get the 
     //the record from the database
     //Database
     $db = phpmotorsConnect();
-    $sql = 'SELECT * FROM inventory WHERE invId = :invId';
+    $sql = "SELECT inventory.invId, inventory.invMake, inventory.invModel, inventory.invDescription, inventory.invImage, inventory.invThumbnail, inventory.invPrice, inventory.invStock, inventory.invColor, inventory.classificationId, images.imgPath FROM inventory JOIN images ON images.invId = inventory.invId WHERE(images.imgName NOT LIKE '%-tn%') AND (images.imgPrimary=1) AND (inventory.invId = :invId);";
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':invId', $invId, PDO::PARAM_STR);
     $stmt->execute();
@@ -164,6 +165,15 @@ function getVehiclesById($invId){
     $stmt->closeCursor();
     return $vehicleInfo;
 }
-
+// Get information for all vehicles
+function getVehicles(){
+	$db = phpmotorsConnect();
+	$sql = 'SELECT invId, invMake, invModel FROM inventory';
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+	$invInfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$stmt->closeCursor();
+	return $invInfo;
+}
 
 ?>

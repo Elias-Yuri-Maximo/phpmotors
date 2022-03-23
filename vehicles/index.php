@@ -11,6 +11,8 @@ require_once '../model/main-model.php';
 require_once '../model/vehicle-model.php';
 //Gets the library with the utility functions
 require_once '../library/functions.php';
+//Gets the uploads-model
+require_once '../model/uploads-model.php';
 
 // Create or access a Session
 session_start();
@@ -54,7 +56,7 @@ switch ($action){
             
             //$invImage = trim(filter_input(INPUT_POST, 'invImage', FILTER_UNSAFE_RAW));
             //$invThumbnail = trim(filter_input(INPUT_POST, 'invThumbnail', FILTER_UNSAFE_RAW));
-            $invPrice = trim(filter_input(INPUT_POST, 'invPrice',FILTER_FLAG_ALLOW_FRACTION ));
+            $invPrice = trim(filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_FLOAT ));
             $invStock = trim(filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT));
             $invColor = trim(filter_input(INPUT_POST, 'invColor', FILTER_UNSAFE_RAW));
             
@@ -281,12 +283,17 @@ if($updateResult === 1){
   case 'carInfo':
   $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
   $vehicleInfo = getVehiclesById($invId);
+  $thumbnails = getThumbnailImages($invId);
+  //print_r($thumbnails);
 
   if(!count($vehicleInfo)){
   $message = "<p class='notice'>Sorry, no $classificationName</p>";
   }else{
-  $vehicleInfoDisplay = buildVehicleDisplay($vehicleInfo);
+  $vehicleInfoDisplay = buildVehicleExtraInfoDisplay($vehicleInfo);
   }
+  $thumbnailDisplay = buildThumbnailDisplay($thumbnails);
+
+  include '../view/vehicle-detail.php';
 
   //print_r($vehicleInfo);
 
