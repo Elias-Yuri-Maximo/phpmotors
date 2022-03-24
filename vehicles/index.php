@@ -296,9 +296,60 @@ if($updateResult === 1){
   include '../view/vehicle-detail.php';
 
   //print_r($vehicleInfo);
+  break;
 
+  //////////////////////////////////////////////////////////////////////////////////
+  //FINAL PROJECT
+  //////////////////////////////////////////////////////////////////////////////////
+  
+  case 'searchPage':
+  // Goes to the search page 
+  include '../view/search-view.php';
 
   break;
+
+
+
+
+  case 'search';
+  //Treates the information from the search form 
+  $searchString = trim(filter_input(INPUT_POST, 'searchString', FILTER_UNSAFE_RAW));
+
+  
+  if(empty($searchString)){
+    $message = '<p>Please fill the search field.</p>';
+    include '../view/search-view.php';
+    exit; 
+  }
+
+ 
+  //Checks if the user is searching for anything but aphanum characters
+  //If they are, returns only a string
+  if ( ctype_alnum($searchString) == false){
+  //If non alphanumeric charcters
+  $message = '<p>Please fill the search field with only numbers or letters.</p>';
+  $searchString = preg_replace("/[^A-Za-z0-9 ]/", '', $searchString);
+  include '../view/search-view.php';
+  exit;
+  }
+
+  //Looks for the searchStign in the database
+  //Function is in the model
+  $responseArray = searchInDB($searchString);
+  print_r($responseArray);
+
+  
+
+    
+  
+  include '../view/search-view.php';
+  
+
+  break;
+
+
+
+
 
 
   default:
@@ -309,6 +360,8 @@ if($updateResult === 1){
       include '../view/vehicle-management.php';
      break;
    }
+
+
    
 
 

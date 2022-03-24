@@ -16,4 +16,7 @@ if (isset($_SESSION['clientData'])){
     echo'<a class="log" href="/phpmotors/accounts/index.php?action=login">My Account</a>';
 }
 ?>
+
+<a class="searchPage" href="/phpmotors/vehicles/index.php?action=searchPage">&#128269;</a>
+  
 </div>

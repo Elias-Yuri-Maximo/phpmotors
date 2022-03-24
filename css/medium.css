@@ -84,6 +84,11 @@
         padding: 3px;
     }
 
+    #thumbnails img:hover{
+        transform: scale(1.5);
+    }
+
+    
     
 
 }
