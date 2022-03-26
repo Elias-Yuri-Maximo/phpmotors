@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use function PHPSTORM_META\type;
+
 function checkEmail($clientEmail){
     $valEmail = filter_var($clientEmail, FILTER_VALIDATE_EMAIL);
     return $valEmail;
@@ -256,5 +259,80 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) 
      return $thumbnailDisplay;
   }
 
-   
+
+
+   function renderResults($responses){
+   //This function gets an array and prints gets it ready to be printed
+      $answerHtml = '<ul id="responses">';
+      foreach ($responses as $response) {
+         $answerHtml .= "<li>";
+         //inserir thumbnails aqui
+         $answerHtml .= "<hr>";
+         $answerHtml .= "<div>";
+         $answerHtml .= '<h3><a href="/phpmotors/vehicles/index.php?action=carInfo&invId='.urlencode($response['invId']).'">'.$response['invMake'].' '. $response['invModel'].'</a></h3>';
+         $answerHtml .= '<p>'.$response['invDescription'].'</p>';
+         $answerHtml .= '<img src="'.$response['imgPath'].'"alt="'.$response['invModel'].'">';
+         $answerHtml .= "</div>";
+         $answerHtml .= "</li>";
+
+      
+      }
+      $answerHtml .= '</ul>';
+      return $answerHtml;
+   }
+
+   function breakArrayIntoTens($responseArray){
+
+      $parsedResponses = array(
+         ) ;
+     
+         $i = 0;
+         $j = 0;
+         $parsedResponses[$j] = array();
+         foreach($responseArray as $car){
+         //Executes for every item of the array
+             //echo $j, $i;
+     
+             if ($i>9){
+               //Executes every ten items
+                 $i=0;
+                 $j++;
+                 $parsedResponses[$j] =array();
+                 
+             }
+             //$parsedResponses['j'] = array();
+             array_push($parsedResponses[$j], $car);
+             //echo $i;
+             $i++;
+         }
+      return $parsedResponses;
+   }
+
+
+
+   function renderPageMenu($searchString,$parsedResponses,$currenPagetIndex){
+      
+      if (isset($parsedResponses[$currenPagetIndex - 1]) ){
+         ///if the previous page exists->create the left backwards link
+         $previousLink = '<a href="/phpmotors/search/index.php?action=previousPage&page='.($currenPagetIndex -1).'&search='.$searchString.'"> <<< </a>';
+         $previousLink .= '<a href="/phpmotors/search/index.php?action=previousPage&page='.($currenPagetIndex -1).'&search='.$searchString.'"> '.($currenPagetIndex).' </a>';
+         
+         
+         //echo $previousLink;
+      }else{$previousLink = '';}
+
+      if (isset($parsedResponses[$currenPagetIndex + 1]) ){
+         ///if the next page exists->create the right link
+         $nextLink = '<a href="/phpmotors/search/index.php?action=nextPage&page='.($currenPagetIndex +1).'&search='.$searchString.'"> '. ($currenPagetIndex + 2) .' </a>';
+         $nextLink .= '<a href="/phpmotors/search/index.php?action=nextPage&page='.($currenPagetIndex +1).'&search='.$searchString.'"> >>> </a>';
+         
+         //echo $nextLink;
+      }else{$nextLink = '';}
+
+      $readyMenu = '<div class="pageMenu">'.$previousLink.'<strong>'.($currenPagetIndex +1) .'</strong>'.$nextLink.'</div>';
+      //echo $readyMenu;
+      return $readyMenu;
+
+
+   }
 ?>

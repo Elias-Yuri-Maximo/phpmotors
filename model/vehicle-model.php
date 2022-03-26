@@ -176,19 +176,6 @@ function getVehicles(){
 	return $invInfo;
 }
 
-function searchInDB($searchString){
-    $db = phpmotorsConnect();
-    $sql = "SELECT * FROM inventory WHERE (invMake LIKE '%:searchString%') OR (invColor LIKE '%:searchString2%') OR (invModel LIKE '%:searchString3%');";
-    $stmt = $db->prepare($sql);
-    $stmt->bindValue(':searchString', $searchString, PDO::PARAM_STR);
-    $stmt->bindValue(':searchString2', $searchString, PDO::PARAM_STR);
-    $stmt->bindValue(':searchString3', $searchString, PDO::PARAM_STR);
-    $stmt->execute();
-    $responseArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $stmt->closeCursor();
-    return $responseArray;
-
-}
 
 
 ?>

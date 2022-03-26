@@ -44,7 +44,7 @@
         }
     ?>
 
-    <form action="/phpmotors/vehicles/index.php" method="post">
+    <form action="/phpmotors/search/index.php" method="post">
         
         <label for="searchString">What are you looking for today?<br>
         <input type="text" id="searchString" name="searchString" <?php if(isset($searchString)){echo "value='$searchString '";}  ?> required></label>
@@ -52,6 +52,18 @@
         <input type="submit" name="submit" value="search">
         <input type="hidden" name="action" value="search">
     </form>
+
+    <?php
+    if(isset($totalResults)){ echo'<h2>'.$totalResults.' results returned for search '.$searchString.'</h2>';}
+    ?>
+
+    <?php
+    if(isset($htmlResults)){  echo $htmlResults;  }
+    ?>
+
+    <?php
+    if(isset($pageMenu)){echo $pageMenu;}
+    ?>
 
     <footer>
     <!--p>&copy; PHP Motors, All rights reserved. All Images used are believed

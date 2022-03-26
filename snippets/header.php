@@ -17,6 +17,6 @@ if (isset($_SESSION['clientData'])){
 }
 ?>
 
-<a class="searchPage" href="/phpmotors/vehicles/index.php?action=searchPage">&#128269;</a>
+<a class="searchPage" href="/phpmotors/search/index.php?action=searchPage">&#128269;</a>
   
 </div>

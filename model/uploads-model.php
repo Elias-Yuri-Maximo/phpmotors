@@ -62,7 +62,7 @@ function checkExistingImage($imgName){
    }
 function getThumbnailImages($invId){
     $db = phpmotorsConnect();
-    $sql = "SELECT * FROM images WHERE (imgName LIKE '%-tn%') AND (invId = :invId);";
+    $sql = "SELECT * FROM images WHERE ((imgName LIKE '%-tn.png') or (imgName LIKE '%-tn.jpg')) AND (invId = :invId);";
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':invId', $invId, PDO::PARAM_STR);
     $stmt->execute();

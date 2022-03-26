@@ -246,3 +246,10 @@ table{
    margin-right: 30px;
 
 }
+
+.pageMenu{
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif, sans-serif;
+}
